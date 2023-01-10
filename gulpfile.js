@@ -18,6 +18,10 @@ const { src, dest } = required ("gulp");
 const sass = required ("gulp-sass") (required ('sass'));
 const plumber = required ('gulp-plumber');
 
+
+//imagenes
+const webp = required ('gulp-webp');
+
 /*cargar sass con gulp */
 function css(done){
     src('src/scss/**/*.scss') //identificar archivo sass
@@ -26,6 +30,13 @@ function css(done){
     .pipe(dest ('build/css')); //almacenarlo en el disco duro
 
     done(); //avisa a gulp cuando llegamos al final de la ejecucion
+}
+
+function versionWebp ( done){
+
+    src('src/img/**/*.{ping, jpg}');
+
+    done();
 }
 
 function dev(done){
