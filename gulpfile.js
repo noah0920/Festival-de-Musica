@@ -11,16 +11,20 @@ const { watch } = require("gulp");
 
 /*compilar sass */
 
-const { src, dest } = required ("gulp");
+const { src, dest, watch, parallel } = required ("gulp");
 //SRC: identificacion de un archivo o una serie de archivos
 //DEST: permite almacenar algo en una carpeta de estilo
 //"gulp" instalado en el pkg, lo extraemos
-const sass = required ("gulp-sass") (required ('sass'));
-const plumber = required ('gulp-plumber');
+const sass = require ("gulp-sass") (required ('sass'));
+const plumber = require ('gulp-plumber');
 
 
 //imagenes
-const webp = required ('gulp-webp');
+const cache = require ('gulp-cache');
+const imagemin = require ('gulp-imagemin');
+const webp = require ('gulp-webp');
+const avif = require ('gulp-avif');
+
 
 /*cargar sass con gulp */
 function css(done){
@@ -32,10 +36,21 @@ function css(done){
     done(); //avisa a gulp cuando llegamos al final de la ejecucion
 }
 
+function imagenes(done){
+
+    src('src/img/**/*.{ping, jpg}')
+    .pipe
+    done();
+}
+
 function versionWebp ( done){
 
-    src('src/img/**/*.{ping, jpg}');
-
+    const opciones = {
+        quality: 50
+    };
+    src('src/img/**/*.{ping, jpg}')
+        .pipe( webp (opciones))
+        .pipe (dest ('build/img'))
     done();
 }
 
@@ -43,5 +58,6 @@ function dev(done){
     watch('src/scss/**/*.scss', css);
     done();
 }
-exports.css = css;  
-exports.dev = dev;
+exports.css = css; 
+exports.versionWebp = versionWebp; 
+exports.dev = parallel (versionWebp, dev);
