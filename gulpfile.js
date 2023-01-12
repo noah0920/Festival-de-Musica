@@ -54,10 +54,22 @@ function versionWebp ( done){
     done();
 }
 
+function versionAvif ( done){
+
+    const opciones = {
+        quality: 50
+    };
+    src('src/img/**/*.{ping, jpg}')
+        .pipe( avif (opciones))
+        .pipe (dest ('build/img'))
+    done();
+}
+
 function dev(done){
     watch('src/scss/**/*.scss', css);
     done();
 }
 exports.css = css; 
-exports.versionWebp = versionWebp; 
-exports.dev = parallel (versionWebp, dev);
+exports.versionWebp = versionWebp;
+exports.versionAvif = versionAvif; 
+exports.dev = parallel (imagenes, versionWebp, versionAvif, dev);
