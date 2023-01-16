@@ -36,18 +36,32 @@ function mostrarImagen(id){
     const overlay = document.createElement ('DIV');
     overlay.appendChild(imagen);
     overlay.classList.add('overlay');
+    overlay.onclick = function(){ /*que apretemos en cualquier parte y se cierre la img */
+
+        const body = document.querySelector ('body');
+        body.classList.remove ('fijar-body');
+
+        overlay.remove();
+
+    }
 
     //boton para cerrar el modal
     const cerrarModal = document.createElement('P');
     cerrarModal.textContent = 'X';
-    cerrarModal.classList.add('.btn-cerrar');
+    cerrarModal.classList.add('btn-cerrar');
+    cerrarModal.onclick = function (){
+
+        const body = document.querySelector ('body');
+        body.classList.remove ('fijar-body');
+
+        overlay.remove();
+    };
     overlay.appendChild(cerrarModal);
 
     //lo añade al html
     const body = document.querySelector ('body');
     body.appendChild(overlay);
-
-
-
+    body.classList.add ('fijar-body');
 
 }
+
