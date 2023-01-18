@@ -17,6 +17,9 @@ body{
     &.fijar-body{
         overflow: hidden; /*hace que no se de scroll cuandotenemos la imagen*/
     }
+    &.body-scroll{
+       padding-top: 8.6rem; 
+    }
 }
 
 p{

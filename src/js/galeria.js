@@ -3,8 +3,45 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 function iniciarApp(){
+    navegacionFija();
     crearGaleria();
+    scrollNav();
 }
+
+function navegacionFija(){
+    const barra = document.querySelector ('.header');
+    const sobreFestival = document.querySelector('.sobre-festival');
+    const body = document.querySelector  ('body');
+
+
+    window.addEventListener('scroll', function(){
+        console.log(sobreFestival.getBoundingClientRect());  /*informacion sobre la ubicacion de un elemento */
+        
+        if (sobreFestival.getBoundingClientRect().bottom < 0) {
+            barra.classList.add ('fijo');
+            body.classList.add ('body-scroll');
+        }else{
+            barra.classList.remove ('fijo');
+            body.classList.remove ('body-scroll');
+        }
+    });
+   
+    
+}
+
+function scrollNav(){ /*efecto smooth en enlaces */
+    const enlaces = document.querySelectorAll('.navegacion-principal a');
+    
+    enlaces.forEach (enlace =>{
+        enlace.addEventListener('click' , function(e){
+            e.preventDefault();
+            const seccionScroll = e.target.attributes.href.value;
+            const seccion = document.querySelector(seccionScroll);
+            seccion.scrollIntoView ({behaviour:'smooth' });
+        });
+    })
+}
+
 
 function crearGaleria(){
     const galeria = document.querySelector('.galeria-imagenes');
